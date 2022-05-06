@@ -1,5 +1,4 @@
-#espaco para definir o jogo que sera inserido
-
+#here we define the game we want to solute
 sudoku = [
     [3,4,1,9,6,7,2,5,8],
     [0,0,0,0,0,0,0,6,0],
@@ -12,7 +11,7 @@ sudoku = [
     [0,5,0,0,2,0,0,0,0]
         ]
 
-def numerZeroExiste():
+def numberZeroExist():
     global sudoku
     for i in range(9):
         for j in range(9):
@@ -20,20 +19,19 @@ def numerZeroExiste():
                 return False
     return True
 
-#percorrer o tabuleiro
-#l --> linha col--> coluna
-def possivelNumero(l,col,number):
-    #print(number, end=" ")
+#looking in the board
+#l --> line col--> column
+def possibleNumber(l,col,number):
     global sudoku
-    #linha
+    #line
     for i in range(0,9):
         if(sudoku[l][i] == number):
             return False
-    #coluna
+    #column
     for i in range(0,9):
         if(sudoku[i][col] == number):
             return False
-    #quadrado
+    #the square
     l0 = (l//3)*3
     col0 = (col//3)*3
     for i in range(0,3):
@@ -43,23 +41,23 @@ def possivelNumero(l,col,number):
 
     return True
 
-def resolve():
+def solve():
     global cont
     cont+=1
     global sudoku
     for i in range(0,9):
         for j in range(0,9):
-            if(sudoku[i][j] == 0):#espaço do sudoku vazio
+            if(sudoku[i][j] == 0):#space with sudoku is empty >>zero<<
                 for n in range(1, 10):
-                    if(possivelNumero(i,j,n)):
+                    if(possibleNumber(i,j,n)):
                         sudoku[i][j] = n
-                        resolve()
-                        if(not numerZeroExiste()):
+                        solve()
+                        if(not numberZeroExist()):
                             sudoku[i][j] = 0
                 return
 
 
-def imprimeSudoku():
+def printSudoku():
     for i in range(0,9):
         print()
         for j in range(0,9):
@@ -69,23 +67,12 @@ def imprimeSudoku():
         if((i+1)%3 == 0):
             print()
 
-#chamda do codigo
-imprimeSudoku()
+#code call
+printSudoku()
 cont = 0
-resolve()
+solve()
 print()
 print("***************************")
-imprimeSudoku()
+printSudoku()
 
-print("\n\nNúmero de chamada da função: "+ str(cont))
-
-
-
-
-
-
-
-
-
-
-
+print("\n\nCalls of solve function: "+ str(cont))
